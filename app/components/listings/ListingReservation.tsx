@@ -26,6 +26,17 @@ const ListingReservation: React.FC<
   disabled,
   disabledDates
 }) => {
+  const currentUrl = typeof window !== 'undefined' ? window.location.href : '';
+  const handleClick = () => {
+    const regex = /\/listings\/(.*)/;
+    const match = currentUrl.match(regex);
+    if (match && match[1]) {
+      const listingId = match[1];
+      console.log(listingId);
+      window.location.href = 'https://react-os-three.vercel.app/space/' + listingId;
+    }
+  };
+
   return ( 
     <div 
       className="
@@ -36,49 +47,15 @@ const ListingReservation: React.FC<
         overflow-hidden
       "
     >
-      <div className="
-      flex flex-row items-center gap-1 p-4">
-        <div className="text-2xl font-semibold">
-          $ {price}
-        </div>
-        <div className="font-light text-neutral-600">
-          night
-        </div>
-      </div>
-      <hr />
-      <Calendar
-        value={dateRange}
-        disabledDates={disabledDates}
-        onChange={(value) => 
-          onChangeDate(value.selection)}
-      />
       <hr />
       <div className="p-4">
         <Button 
           disabled={disabled} 
-          label="Reserve" 
-          onClick={onSubmit}
+          label="Visit Space" 
+          onClick={handleClick}
         />
       </div>
       <hr />
-      <div 
-        className="
-          p-4 
-          flex 
-          flex-row 
-          items-center 
-          justify-between
-          font-semibold
-          text-lg
-        "
-      >
-        <div>
-          Total
-        </div>
-        <div>
-          $ {totalPrice}
-        </div>
-      </div>
     </div>
    );
 }

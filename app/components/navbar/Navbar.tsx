@@ -4,6 +4,7 @@ import Categories from "./Categories";
 import Container from "../Container";
 import Logo from "./Logo";
 import Search from "./Search";
+import React, { useState } from 'react';
 import UserMenu from "./UserMenu";
 
 interface NavbarProps {
@@ -23,6 +24,7 @@ const Navbar: React.FC<NavbarProps> = ({
       >
       <Container>
         <div 
+        style={{display:"flex",justifyContent:"flex-end"}}
           className="
             flex 
             flex-row 
@@ -32,8 +34,6 @@ const Navbar: React.FC<NavbarProps> = ({
             md:gap-0
           "
         >
-          <Logo />
-          <Search />
           <UserMenu currentUser={currentUser} />
         </div>
       </Container>
