@@ -31,7 +31,7 @@ const ListingHead: React.FC<ListingHeadProps> = ({
     <>
       <Heading
         title={title}
-        subtitle={`${location?.region}, ${location?.label}`}
+        subtitle={"SpaceID: " + id}
       />
       <div className="
           w-full

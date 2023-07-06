@@ -21,6 +21,7 @@ import { categories } from '../navbar/Categories';
 import ImageUpload from '../inputs/ImageUpload';
 import Input from '../inputs/Input';
 import Heading from '../Heading';
+//import getCurrentUser from "@/app/actions/getCurrentUser";
 
 enum STEPS {
   CATEGORY = 0,
@@ -37,6 +38,15 @@ const RentModal = () => {
 
   const [isLoading, setIsLoading] = useState(false);
   const [step, setStep] = useState(STEPS.CATEGORY);
+  //const currentUser = getCurrentUser();
+
+  const defaultCountryValue = {
+    flag: '🌍',
+    label: 'Porter',
+    latlng: [0, 0],
+    region: 'Mugen',
+    value: 'Meta'
+  };
 
   const { 
     register, 
@@ -50,7 +60,7 @@ const RentModal = () => {
   } = useForm<FieldValues>({
     defaultValues: {
       category: '',
-      location: null,
+      location: defaultCountryValue,
       guestCount: 1,
       roomCount: 1,
       bathroomCount: 1,
@@ -60,6 +70,15 @@ const RentModal = () => {
       description: '',
     }
   });
+
+  const defaultLocation = useMemo(() => {
+    return {
+      flag: 'AO',
+      label: 'AO',
+      latlng: [15,15], // Default latitude and longitude coordinates
+      region: 'Hello'
+    };
+  }, []);
 
   const location = watch('location');
   const category = watch('category');
@@ -95,6 +114,8 @@ const RentModal = () => {
     }
     
     setIsLoading(true);
+
+   
 
     axios.post('/api/listings', data)
     .then(() => {
@@ -162,15 +183,9 @@ const RentModal = () => {
   if (step === STEPS.LOCATION) {
     bodyContent = (
       <div className="flex flex-col gap-8">
-        <Heading
-          title="Where is your place located?"
-          subtitle="Help guests find you!"
-        />
-        <CountrySelect 
-          value={location} 
-          onChange={(value) => setCustomValue('location', value)} 
-        />
-        <Map center={location?.latlng} />
+
+        
+      
       </div>
     );
   }
@@ -199,8 +214,8 @@ const RentModal = () => {
         <Counter 
           onChange={(value) => setCustomValue('bathroomCount', value)}
           value={bathroomCount}
-          title="Bathrooms" 
-          subtitle="How many bathrooms do you have?"
+          title="Admins" 
+          subtitle="How many Admin do you have?"
         />
       </div>
     )
@@ -274,7 +289,7 @@ const RentModal = () => {
     <Modal
       disabled={isLoading}
       isOpen={rentModal.isOpen}
-      title="Airbnb your home!"
+      title="CreateSpace!"
       actionLabel={actionLabel}
       onSubmit={handleSubmit(onSubmit)}
       secondaryActionLabel={secondaryActionLabel}

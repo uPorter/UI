@@ -12,13 +12,21 @@ export type CountrySelectValue = {
   value: string
 }
 
+const defaultCountryValue: CountrySelectValue = {
+  flag: '🌍',
+  label: 'Dünya',
+  latlng: [0, 0],
+  region: 'Dünya',
+  value: 'dunya'
+};
+
 interface CountrySelectProps {
   value?: CountrySelectValue;
   onChange: (value: CountrySelectValue) => void;
 }
 
 const CountrySelect: React.FC<CountrySelectProps> = ({
-  value,
+  value = defaultCountryValue, // value propuna sabit değeri atama
   onChange
 }) => {
   const { getAll } = useCountries();
