@@ -153,6 +153,7 @@ const ListingClient: React.FC<ListingClientProps> = ({
               "
             >
               <ListingReservation
+                currentUser={currentUser}
                 price={listing.price}
                 totalPrice={totalPrice}
                 onChangeDate={(value) => setDateRange(value)}

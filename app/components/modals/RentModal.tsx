@@ -9,7 +9,7 @@ import {
 } from 'react-hook-form';
 import dynamic from 'next/dynamic'
 import { useRouter } from 'next/navigation';
-import { useMemo, useState } from "react";
+import { useMemo, useState,useEffect } from "react";
 
 import useRentModal from '@/app/hooks/useRentModal';
 
@@ -29,7 +29,6 @@ enum STEPS {
   INFO = 2,
   IMAGES = 3,
   DESCRIPTION = 4,
-  PRICE = 5,
 }
 
 const RentModal = () => {
@@ -109,7 +108,7 @@ const RentModal = () => {
   }
 
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
-    if (step !== STEPS.PRICE) {
+    if (step !== STEPS.DESCRIPTION) {
       return onNext();
     }
     
@@ -134,12 +133,25 @@ const RentModal = () => {
   }
 
   const actionLabel = useMemo(() => {
-    if (step === STEPS.PRICE) {
+    if (step === STEPS.DESCRIPTION) {
       return 'Create'
     }
 
     return 'Next'
+  }, [step])
+  
+  const handleLocation = () => {
+    if (step === STEPS.LOCATION){
+      onNext();
+    }
+  }
+
+
+  
+  useEffect(() => {
+    handleLocation();
   }, [step]);
+
 
   const secondaryActionLabel = useMemo(() => {
     if (step === STEPS.CATEGORY) {
@@ -183,8 +195,6 @@ const RentModal = () => {
   if (step === STEPS.LOCATION) {
     bodyContent = (
       <div className="flex flex-col gap-8">
-
-        
       
       </div>
     );
@@ -264,26 +274,6 @@ const RentModal = () => {
     )
   }
 
-  if (step === STEPS.PRICE) {
-    bodyContent = (
-      <div className="flex flex-col gap-8">
-        <Heading
-          title="Now, set your price"
-          subtitle="How much do you charge per night?"
-        />
-        <Input
-          id="price"
-          label="Price"
-          formatPrice 
-          type="number" 
-          disabled={isLoading}
-          register={register}
-          errors={errors}
-          required
-        />
-      </div>
-    )
-  }
 
   return (
     <Modal

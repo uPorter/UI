@@ -4,8 +4,10 @@ import { Range } from "react-date-range";
 
 import Button from "../Button";
 import Calendar from "../inputs/Calendar";
+import { SafeUser } from "@/app/types";
 
 interface ListingReservationProps {
+  currentUser?: SafeUser | null
   price: number;
   dateRange: Range,
   totalPrice: number;
@@ -18,6 +20,7 @@ interface ListingReservationProps {
 const ListingReservation: React.FC<
   ListingReservationProps
 > = ({
+  currentUser,
   price,
   dateRange,
   totalPrice,
@@ -33,7 +36,7 @@ const ListingReservation: React.FC<
     if (match && match[1]) {
       const listingId = match[1];
       console.log(listingId);
-      window.location.href = 'https://react-os-three.vercel.app/space/' + listingId;
+      window.location.href = 'https://react-os-three.vercel.app/space/' + listingId + '/' + currentUser?.name + '/' + currentUser?.id;
     }
   };
 
