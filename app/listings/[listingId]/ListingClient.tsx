@@ -153,6 +153,7 @@ const ListingClient: React.FC<ListingClientProps> = ({
               "
             >
               <ListingReservation
+                user={listing.user}
                 currentUser={currentUser}
                 price={listing.price}
                 totalPrice={totalPrice}

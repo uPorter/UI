@@ -7,6 +7,7 @@ import Calendar from "../inputs/Calendar";
 import { SafeUser } from "@/app/types";
 
 interface ListingReservationProps {
+  user?: SafeUser | null
   currentUser?: SafeUser | null
   price: number;
   dateRange: Range,
@@ -20,6 +21,7 @@ interface ListingReservationProps {
 const ListingReservation: React.FC<
   ListingReservationProps
 > = ({
+  user,
   currentUser,
   price,
   dateRange,
@@ -36,7 +38,13 @@ const ListingReservation: React.FC<
     if (match && match[1]) {
       const listingId = match[1];
       console.log(listingId);
-      window.location.href = 'https://react-os-three.vercel.app/space/' + listingId + '/' + currentUser?.name + '/' + currentUser?.id;
+      
+      if(currentUser?.id === user?.id){
+        window.location.href = 'https://react-os-three.vercel.app/space/' + listingId + '/' + currentUser?.name + '/' + currentUser?.id + '/true';
+      }else{
+        window.location.href = 'https://react-os-three.vercel.app/space/' + listingId + '/' + currentUser?.name + '/' + currentUser?.id + '/false';
+      }
+      
     }
   };
 
