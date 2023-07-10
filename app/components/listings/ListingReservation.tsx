@@ -39,12 +39,13 @@ const ListingReservation: React.FC<
       const listingId = match[1];
       console.log(listingId);
       
-      if(currentUser?.id === user?.id){
-        window.location.href = 'https://react-os-three.vercel.app/space/' + listingId + '/' + currentUser?.name + '/' + currentUser?.id + '/true';
-      }else{
-        window.location.href = 'https://react-os-three.vercel.app/space/' + listingId + '/' + currentUser?.name + '/' + currentUser?.id + '/false';
+      if (currentUser?.id === undefined) {
+        window.location.href = `https://react-os-three.vercel.app/space/${listingId}`;
+      } else if (currentUser?.id === user?.id) {
+        window.location.href = `https://react-os-three.vercel.app/space/${listingId}/${currentUser?.name}/${currentUser?.id}/true`;
+      } else {
+        window.location.href = `https://react-os-three.vercel.app/space/${listingId}/${currentUser?.name}/${currentUser?.id}/false`;
       }
-      
     }
   };
 
