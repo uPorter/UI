@@ -214,22 +214,9 @@ const RentModal = () => {
           subtitle="How many guests do you allow?"
         />
         <hr />
-        <Counter 
-          onChange={(value) => setCustomValue('roomCount', value)}
-          value={roomCount}
-          title="Rooms" 
-          subtitle="How many rooms do you have?"
-        />
-        <hr />
-        <Counter 
-          onChange={(value) => setCustomValue('bathroomCount', value)}
-          value={bathroomCount}
-          title="Admins" 
-          subtitle="How many Admin do you have?"
-        />
       </div>
     )
-  }
+  }s
 
   if (step === STEPS.IMAGES) {
     bodyContent = (
