@@ -216,7 +216,7 @@ const RentModal = () => {
         <hr />
       </div>
     )
-  }s
+  }
 
   if (step === STEPS.IMAGES) {
     bodyContent = (
