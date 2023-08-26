@@ -1,4 +1,5 @@
 'use client';
+import { SafeUser } from "@/app/types";
 
 import axios from 'axios';
 import { toast } from 'react-hot-toast';
@@ -21,7 +22,9 @@ import { categories } from '../navbar/Categories';
 import ImageUpload from '../inputs/ImageUpload';
 import Input from '../inputs/Input';
 import Heading from '../Heading';
-//import getCurrentUser from "@/app/actions/getCurrentUser";
+import getListings, { 
+  IListingsParams
+} from "@/app/actions/getListings";
 
 enum STEPS {
   CATEGORY = 0,
@@ -31,13 +34,18 @@ enum STEPS {
   DESCRIPTION = 4,
 }
 
-const RentModal = () => {
+interface RentModalProps {
+  currentUser?: SafeUser | null;
+}
+
+const RentModal: React.FC<RentModalProps> = ({
+  currentUser,
+}) => {
   const router = useRouter();
   const rentModal = useRentModal();
 
   const [isLoading, setIsLoading] = useState(false);
   const [step, setStep] = useState(STEPS.CATEGORY);
-  //const currentUser = getCurrentUser();
 
   const defaultCountryValue = {
     flag: '🌍',
@@ -114,11 +122,18 @@ const RentModal = () => {
     
     setIsLoading(true);
 
-   
 
     axios.post('/api/listings', data)
-    .then(() => {
+    .then(response => {
       toast.success('Listing created!');
+      console.log(response.data);
+      if (currentUser?.id === undefined) {
+        window.location.href = `https://react-os-three.vercel.app/space/${response.data.id}/${response.data.title}/${response.data.description}/${currentUser?.name}`;
+      } else if (currentUser?.id === response.data.userId) {
+        window.location.href = `https://react-os-three.vercel.app/space/${response.data.id}/${currentUser?.name}/${currentUser?.id}/true/${response.data.title}/${response.data.description}/${currentUser?.name}`;
+      } else {
+        window.location.href = `https://react-os-three.vercel.app/space/${response.data.id}/${currentUser?.name}/${currentUser?.id}/false/${response.data.title}/${response.data.description}/${currentUser?.name}`;
+      }
       router.refresh();
       reset();
       setStep(STEPS.CATEGORY)
@@ -212,6 +227,7 @@ const RentModal = () => {
           value={guestCount}
           title="Guests" 
           subtitle="How many guests do you allow?"
+          maxValue={25}
         />
         <hr />
       </div>

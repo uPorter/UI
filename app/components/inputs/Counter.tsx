@@ -8,6 +8,7 @@ interface CounterProps {
   subtitle: string;
   value: number;
   onChange: (value: number) => void;
+  maxValue?: number;  // New prop for maximum value
 }
 
 const Counter: React.FC<CounterProps> = ({
@@ -15,17 +16,18 @@ const Counter: React.FC<CounterProps> = ({
   subtitle,
   value,
   onChange,
+  maxValue = Infinity,  // Default value of Infinity if maxValue is not provided
 }) => {
   const onAdd = useCallback(() => {
-    onChange(value + 1);
-  }, [onChange, value]);
+    if (value < maxValue) {  // Check if value is less than the maxValue
+      onChange(value + 1);
+    }
+  }, [onChange, value, maxValue]);
 
   const onReduce = useCallback(() => {
-    if (value === 1) {
-      return;
+    if (value > 1) {  // Check if value is greater than 1
+      onChange(value - 1);
     }
-
-    onChange(value - 1);
   }, [onChange, value]);
 
   return ( 

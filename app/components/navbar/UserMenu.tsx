@@ -42,7 +42,19 @@ const UserMenu: React.FC<UserMenuProps> = ({
 
   return ( 
     <div className="relative">
-      <div className="flex flex-row items-center gap-3">
+      {isOpen && (
+      <div
+        className="
+          fixed
+          inset-0
+          opacity-50
+          z-50
+          cursor-pointer
+        "
+        onClick={toggleOpen}
+      ></div>
+    )}
+      <div style={{zIndex:"9999",position:"relative"}} className="flex flex-row items-center gap-3">
         <div
           onClick={onRent}
           className="
@@ -86,6 +98,7 @@ const UserMenu: React.FC<UserMenuProps> = ({
       </div>
       {isOpen && (
         <div 
+        style={{zIndex:"999"}}  
           className="
             absolute 
             rounded-xl 
@@ -99,7 +112,7 @@ const UserMenu: React.FC<UserMenuProps> = ({
             text-sm
           "
         >
-          <div className="flex flex-col cursor-pointer">
+          <div   className="flex flex-col cursor-pointer">
             {currentUser ? (
               <>
                 <MenuItem 

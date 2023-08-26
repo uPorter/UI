@@ -16,6 +16,8 @@ interface ListingReservationProps {
   onSubmit: () => void;
   disabled?: boolean;
   disabledDates: Date[];
+  title: string;
+  description: string;
 }
 
 const ListingReservation: React.FC<
@@ -23,6 +25,8 @@ const ListingReservation: React.FC<
 > = ({
   user,
   currentUser,
+  title,
+  description,
   price,
   dateRange,
   totalPrice,
@@ -40,11 +44,11 @@ const ListingReservation: React.FC<
       console.log(listingId);
       
       if (currentUser?.id === undefined) {
-        window.location.href = `https://react-os-three.vercel.app/space/${listingId}`;
+        window.location.href = `https://react-os-three.vercel.app/space/${listingId}/${title}/${description}/${user?.name}`;
       } else if (currentUser?.id === user?.id) {
-        window.location.href = `https://react-os-three.vercel.app/space/${listingId}/${currentUser?.name}/${currentUser?.id}/true`;
+        window.location.href = `https://react-os-three.vercel.app/space/${listingId}/${currentUser?.name}/${currentUser?.id}/true/${title}/${description}/${user?.name}`;
       } else {
-        window.location.href = `https://react-os-three.vercel.app/space/${listingId}/${currentUser?.name}/${currentUser?.id}/false`;
+        window.location.href = `https://react-os-three.vercel.app/space/${listingId}/${currentUser?.name}/${currentUser?.id}/false/${title}/${description}/${user?.name}`;
       }
     }
   };
